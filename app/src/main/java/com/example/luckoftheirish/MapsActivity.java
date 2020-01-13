@@ -33,21 +33,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-<<<<<<< Updated upstream
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        LatLng breda = new LatLng(51.589152, 4.77534);
-        CameraPosition cameraPosition
-                = new CameraPosition.Builder()
-                .target(breda)
-                .zoom(15)
-                .build();
-
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.addMarker(new MarkerOptions().position(breda).title("Marker in Breda"));
-        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-=======
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
@@ -57,7 +42,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             mMap.setMyLocationEnabled(true);
         }
-
->>>>>>> Stashed changes
     }
 }
