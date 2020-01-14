@@ -16,9 +16,11 @@ import java.util.ArrayList;
 public class LuckOfTheIrishAdapter extends RecyclerView.Adapter<LuckOfTheIrishAdapter.LuckOfTheIrishViewHolder>{
 
     private ArrayList<IrishPub> dataset;
+    private ListListener listListener;
 
-    public LuckOfTheIrishAdapter(ArrayList<IrishPub> dataset){
+    public LuckOfTheIrishAdapter(ArrayList<IrishPub> dataset, ListListener listener){
         this.dataset = dataset;
+        this.listListener = listener;
     }
 
     public class LuckOfTheIrishViewHolder extends RecyclerView.ViewHolder{
@@ -32,14 +34,10 @@ public class LuckOfTheIrishAdapter extends RecyclerView.Adapter<LuckOfTheIrishAd
             imageView = itemView.findViewById(R.id.pub_photo);
 
             imageView.setOnClickListener((view) ->{
-                Intent intent = new Intent(
-                        view.getContext(),
-                        MapsActivity.class);
+
                 IrishPub irishPub = dataset.get(LuckOfTheIrishViewHolder.super.getAdapterPosition());
+                listListener.onItemClicked(irishPub);
 
-                intent.putExtra("IRISHPUB_OBJECT", irishPub);
-
-                view.getContext().startActivity(intent);
             });
         }
     }

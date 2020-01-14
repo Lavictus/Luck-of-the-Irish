@@ -39,7 +39,7 @@ import com.google.android.gms.tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMapsAPIListner{
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMapsAPIListner, ListListener{
 
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
@@ -140,7 +140,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
-        adapter = new LuckOfTheIrishAdapter(irishPubs);
+        adapter = new LuckOfTheIrishAdapter(irishPubs, this);
         recyclerView.setAdapter(adapter);
 
         if(pubListFragment.isHidden()){
@@ -165,5 +165,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-
+    @Override
+    public void onItemClicked(IrishPub ip) {
+        if(irishPubs.contains(ip)){
+            for(int i = 0; i<irishPubs.size(); i++){
+                IrishPub iPub = irishPubs.get(i);
+                if(iPub.equals(ip)){
+                    mMap.addMarker(new MarkerOptions()
+                            .position(iPub.latLng)
+                            .title(iPub.name)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+                }else{
+                    mMap.addMarker(new MarkerOptions()
+                            .position(iPub.latLng)
+                            .title(iPub.name)
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
+                }
+                
+            }
+        }
+    }
 }
