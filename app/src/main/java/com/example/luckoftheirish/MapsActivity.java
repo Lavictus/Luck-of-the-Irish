@@ -5,12 +5,17 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -35,7 +40,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private final int DEFAULT_ZOOM = 15;
     private GoogleMapsAPIManager apiManager;
     private List<IrishPub> irishPubs = new ArrayList<>();
-    private ImageView imageView;
+    private ImageView menuButton;
+
+
+    private FragmentManager fragmentManager;
+
+
+    private PubListFragment pubListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +59,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         apiManager = new GoogleMapsAPIManager(getApplicationContext(), this);
         apiManager.getPubs();
+        fragmentManager = getSupportFragmentManager();
+        pubListFragment = new PubListFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_container, pubListFragment);
+        ft.hide(pubListFragment);
+        ft.commit();
+
+        menuButton = findViewById(R.id.button_menu);
+
+        menuButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                openCloseMenu();
+            }
+        });
+
+
     }
 
     @Override
@@ -94,10 +122,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    public void openCloseMenu(){
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+
+        if(pubListFragment.isHidden()){
+            ft.show(pubListFragment);
+        }else{
+            ft.hide(pubListFragment);
+        }
+        ft.commit();
+      }
 
 
     @Override
     public void onIrishPubsAvailable(IrishPub irishPub) {
         irishPubs.add(irishPub);
     }
+
+
+
 }
