@@ -45,7 +45,7 @@ public class GoogleMapsAPIManager {
                                 String name = (String)pubs.getJSONObject(i).get("name");
                                 LatLng location = new LatLng((double)pubs.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").get("lat"),(double)pubs.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").get("lat"));
                                 String photoRefrence = (String)pubs.getJSONObject(i).getJSONArray("photos").getJSONObject(0).get("photo_reference");
-                                String photo = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=720&"  + photoRefrence + "&key=AIzaSyA_HwO737Cw7gIdDpJ3pH8XGee0qKgnKGA";
+                                String photo = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference="  + photoRefrence + "&key=AIzaSyA_HwO737Cw7gIdDpJ3pH8XGee0qKgnKGA";
 
                                 IrishPub irishPub = new IrishPub(location, name, photo);
                                 listner.onIrishPubsAvailable(irishPub);
