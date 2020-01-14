@@ -71,6 +71,8 @@ public class IrishPub implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
         parcel.writeString(photoURL);
+        parcel.writeDouble(latLng.latitude);
+        parcel.writeDouble(latLng.longitude);
     }
 
     @NonNull

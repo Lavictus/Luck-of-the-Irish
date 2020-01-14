@@ -1,6 +1,7 @@
 package com.example.luckoftheirish;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -14,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -33,14 +36,16 @@ import com.google.android.gms.tasks.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMapsAPIListner {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMapsAPIListner{
 
     private GoogleMap mMap;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private final int DEFAULT_ZOOM = 15;
     private GoogleMapsAPIManager apiManager;
-    private List<IrishPub> irishPubs = new ArrayList<>();
+    private ArrayList<IrishPub> irishPubs;
     private ImageView menuButton;
+    public  LuckOfTheIrishAdapter adapter;
+    public  RecyclerView recyclerView;
 
 
     private FragmentManager fragmentManager;
@@ -57,14 +62,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        apiManager = new GoogleMapsAPIManager(getApplicationContext(), this);
-        apiManager.getPubs();
+
         fragmentManager = getSupportFragmentManager();
         pubListFragment = new PubListFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_container, pubListFragment);
         ft.hide(pubListFragment);
         ft.commit();
+
+        irishPubs = new ArrayList<>();
+        apiManager = new GoogleMapsAPIManager(getApplicationContext(), this);
+        apiManager.getPubs();
+
 
         menuButton = findViewById(R.id.button_menu);
 
@@ -126,6 +135,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
 
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
+        adapter = new LuckOfTheIrishAdapter(irishPubs);
+        recyclerView.setAdapter(adapter);
+
         if(pubListFragment.isHidden()){
             ft.show(pubListFragment);
         }else{
@@ -138,6 +152,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onIrishPubsAvailable(IrishPub irishPub) {
         irishPubs.add(irishPub);
+
     }
 
 
