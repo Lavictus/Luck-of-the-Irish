@@ -3,6 +3,8 @@ package com.example.luckoftheirish;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.maps.model.LatLng;
 
 public class IrishPub implements Parcelable {
@@ -69,6 +71,11 @@ public class IrishPub implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(name);
         parcel.writeString(photoURL);
-        parcel.write
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -47,6 +47,11 @@ public class GoogleMapsAPIManager {
                                 LatLng location = new LatLng((double)pubs.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").get("lat"),(double)pubs.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").get("lat"));
                                 String photoRefrence = (String)pubs.getJSONObject(i).getJSONArray("photos").getJSONObject(0).get("photo_reference");
                                 String photo = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=720&"  + photoRefrence + "&key=AIzaSyAiKQAbsgKq4ezEgnV4zLjbXDNLs_OxjNw";
+
+                                IrishPub irishPub = new IrishPub(location, name, photo);
+
+                                Log.d("DEBUG", irishPub.toString());
+                                listner.onIrishPubsAvailable(irishPub);
                             }
                         } catch(JSONException e){
                             System.out.println(e);
@@ -60,5 +65,6 @@ public class GoogleMapsAPIManager {
                     }
                 }
         );
+        queue.add(request);
     }
 }
