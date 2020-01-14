@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/pub_photo"
-        android:layout_width="412dp"
-        android:layout_height="152dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@android:color/holo_orange_light"
         android:scaleType="centerCrop"
         app:layout_constraintDimensionRatio="1:1"
@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/image_mask"
-        android:layout_width="417dp"
-        android:layout_height="154dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:alpha="0.4"
         android:background="@android:color/background_dark"
         android:scaleType="centerCrop"
@@ -33,15 +33,15 @@
 
     <TextView
         android:id="@+id/pub_name"
-        android:layout_width="291dp"
-        android:layout_height="104dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textColor="@android:color/background_light"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/pub_photo"
-        app:layout_constraintEnd_toStartOf="@+id/pub_photo"
+        app:layout_constraintBottom_toBottomOf="@+id/pub_photo"
+        app:layout_constraintEnd_toEndOf="@id/pub_photo"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/pub_photo"
-        app:layout_constraintTop_toBottomOf="@+id/pub_photo" />
+        app:layout_constraintStart_toStartOf="@+id/pub_photo"
+        app:layout_constraintTop_toTopOf="@+id/pub_photo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
